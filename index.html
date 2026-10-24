@@ -7,7 +7,7 @@
     <meta name="description" content="Sincronizador automático de saves na nuvem para jogos cooperativos peer-to-peer como HumanitZ, Valheim e Sons of the Forest.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -35,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* Container */
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -63,7 +62,7 @@
 
         .nav-links {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             align-items: center;
         }
 
@@ -73,10 +72,11 @@
             font-size: 14px;
             font-weight: 500;
             transition: color 0.2s;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
-            color: var(--text-main);
+            color: var(--accent-cyan);
         }
 
         .btn-github {
@@ -92,7 +92,7 @@
             background: #334155;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             padding: 80px 0 60px;
             text-align: center;
@@ -166,7 +166,7 @@
             border-color: #334155;
         }
 
-        /* Grid de Recursos */
+        /* Recursos */
         .features {
             padding: 60px 0;
         }
@@ -241,7 +241,6 @@
             border: 1px solid var(--card-border);
             padding: 24px;
             border-radius: 12px;
-            position: relative;
         }
 
         .step-num {
@@ -263,6 +262,93 @@
         .step-item p {
             font-size: 13px;
             color: var(--text-muted);
+        }
+
+        /* Seção Embutida de Documentação / Modais */
+        .embedded-docs {
+            padding: 60px 0;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .docs-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            background: #131b2e;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: #0284c7;
+            color: #fff;
+            border-color: #00f2fe;
+        }
+
+        .doc-display-box {
+            background: #0e1526;
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 36px;
+            max-height: 520px;
+            overflow-y: auto;
+            line-height: 1.7;
+        }
+
+        .doc-display-box h3 {
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .doc-display-box .doc-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .doc-display-box h4 {
+            font-size: 16px;
+            color: #38bdf8;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+        .doc-display-box p, .doc-display-box li {
+            font-size: 14px;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        .doc-display-box ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .doc-actions {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .btn-open-full {
+            font-size: 13px;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-open-full:hover {
+            text-decoration: underline;
         }
 
         /* Footer */
@@ -301,6 +387,7 @@
             .hero h1 { font-size: 34px; }
             .hero p { font-size: 16px; }
             .footer-content { flex-direction: column; text-align: center; }
+            .docs-tabs { flex-direction: column; }
         }
     </style>
 </head>
@@ -309,12 +396,12 @@
     <div class="container">
         <!-- Navegação -->
         <nav>
-            <a href="#" class="logo">⚡ FYXXSYNc</a>
+            <a href="index.html" class="logo">⚡ FYXXSYNc</a>
             <div class="nav-links">
                 <a href="#recursos">Recursos</a>
                 <a href="#como-funciona">Como Funciona</a>
-                <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Privacy%20Policy" target="_blank">Privacidade</a>
-                <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Terms%20of%20Service" target="_blank">Termos</a>
+                <a href="#documentos" onclick="switchDoc('privacy')">Privacidade</a>
+                <a href="#documentos" onclick="switchDoc('terms')">Termos</a>
                 <a href="https://github.com/ogerrva/FYXXSYNc" target="_blank" class="btn-github">GitHub</a>
             </div>
         </nav>
@@ -410,6 +497,65 @@
             </div>
         </section>
 
+        <!-- Documentação Legal Embutida (Privacidade e Termos) -->
+        <section id="documentos" class="embedded-docs">
+            <div class="section-title">
+                <h2>Documentação Legal e Transparência</h2>
+                <p>Políticas de uso de dados em total conformidade com o Google API Limited Use Policy.</p>
+            </div>
+
+            <div class="docs-tabs">
+                <button id="btn-tab-privacy" class="tab-btn active" onclick="switchDoc('privacy')">🔒 Política de Privacidade</button>
+                <button id="btn-tab-terms" class="tab-btn" onclick="switchDoc('terms')">📜 Termos de Serviço</button>
+            </div>
+
+            <!-- Painel de Privacidade Embutido -->
+            <div id="content-privacy" class="doc-display-box">
+                <h3>Política de Privacidade do FYXXSYNc</h3>
+                <div class="doc-meta">Última atualização: 24 de outubro de 2026</div>
+
+                <p>O aplicativo <strong>FYXXSYNc</strong> respeita a privacidade de seus usuários e tem o compromisso de proteger suas informações. Esta política explica de forma clara como os dados são tratados.</p>
+
+                <h4>1. Dados Coletados</h4>
+                <ul>
+                    <li><strong>Conta Google:</strong> Nome de exibição e e-mail via OAuth para exibição de status e identificação de quem é o host atual.</li>
+                    <li><strong>Arquivos de Saves:</strong> Apenas os arquivos do mundo selecionado e metadados de versão (data, tamanho e hash SHA256).</li>
+                </ul>
+
+                <h4>2. Uso da API do Google Drive</h4>
+                <p>O FYXXSYNc acessa estritamente a pasta <code>FYXXSYNC</code> no seu próprio Google Drive para armazenar e baixar os saves compactados e cópias de segurança.</p>
+                <p><em>O uso das informações recebidas das APIs do Google cumprirá a Política de Dados do Usuário dos Serviços de API do Google, incluindo os requisitos de Uso Limitado.</em></p>
+
+                <h4>3. Não Comercialização</h4>
+                <p>Não vendemos, alugamos nem repassamos dados para terceiros ou anunciantes. Toda a conexão é direta entre seu PC e os servidores do Google via HTTPS.</p>
+
+                <div class="doc-actions">
+                    <a href="privacy.html" target="_blank" class="btn-open-full">↗ Abrir Política de Privacidade em Página Cheia (privacy.html)</a>
+                </div>
+            </div>
+
+            <!-- Painel de Termos Embutido -->
+            <div id="content-terms" class="doc-display-box" style="display: none;">
+                <h3>Termos de Serviço do FYXXSYNc</h3>
+                <div class="doc-meta">Última atualização: 24 de outubro de 2026</div>
+
+                <p>Ao utilizar o aplicativo FYXXSYNc, você concorda expressamente com os termos estabelecidos abaixo.</p>
+
+                <h4>1. Descrição do Serviço</h4>
+                <p>O FYXXSYNc é uma ferramenta utilitária independente desenvolvida para automatizar a sincronização de saves de jogos cooperativos através da conta Google Drive do próprio usuário.</p>
+
+                <h4>2. Isenção e Propriedade de Terceiros</h4>
+                <p>Marcas e nomes de jogos como <em>HumanitZ</em>, <em>Valheim</em>, <em>Sons of the Forest</em> e outros pertencem a seus respectivos estúdios. O FYXXSYNc não possui afiliação oficial com os desenvolvedores dos jogos ou com a Steam/Valve.</p>
+
+                <h4>3. Limitação de Responsabilidade</h4>
+                <p>O aplicativo é fornecido "no estado em que se encontra" (AS IS). O programa inclui rotinas automáticas de backup preventivo local antes de sobrescrever arquivos.</p>
+
+                <div class="doc-actions">
+                    <a href="terms.html" target="_blank" class="btn-open-full">↗ Abrir Termos de Serviço em Página Cheia (terms.html)</a>
+                </div>
+            </div>
+        </section>
+
         <!-- Rodapé -->
         <footer>
             <div class="footer-content">
@@ -417,13 +563,33 @@
                     <strong>⚡ FYXXSYNc</strong> &copy; 2026. Desenvolvido para a comunidade gamer.
                 </div>
                 <div class="footer-links">
-                    <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Privacy%20Policy" target="_blank">Política de Privacidade</a>
-                    <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Terms%20of%20Service" target="_blank">Termos de Serviço</a>
+                    <a href="privacy.html">Política de Privacidade</a>
+                    <a href="terms.html">Termos de Serviço</a>
                     <a href="mailto:gerrva@gmail.com">Contato</a>
                 </div>
             </div>
         </footer>
     </div>
 
+    <script>
+        function switchDoc(type) {
+            const privContent = document.getElementById('content-privacy');
+            const termsContent = document.getElementById('content-terms');
+            const btnPriv = document.getElementById('btn-tab-privacy');
+            const btnTerms = document.getElementById('btn-tab-terms');
+
+            if (type === 'privacy') {
+                privContent.style.display = 'block';
+                termsContent.style.display = 'none';
+                btnPriv.classList.add('active');
+                btnTerms.classList.remove('active');
+            } else {
+                privContent.style.display = 'none';
+                termsContent.style.display = 'block';
+                btnPriv.classList.remove('active');
+                btnTerms.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
