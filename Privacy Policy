@@ -1,0 +1,61 @@
+# Política de Privacidade - FYXXSYNc
+
+Última atualização: 24 de outubro de 2026
+
+O aplicativo **FYXXSYNc** ("nós", "nosso" ou "aplicativo") tem como compromisso a proteção da privacidade e dos dados dos seus usuários. Esta Política de Privacidade explica de forma transparente como coletamos, utilizamos, armazenamos e protegemos suas informações ao utilizar nosso software desktop para sincronização de saves de jogos cooperativos.
+
+---
+
+### 1. Informações que Coletamos
+
+Para realizar a sincronização de arquivos de savegame entre jogadores, o FYXXSYNc acessa os seguintes dados:
+
+1. **Dados de Perfil Básico da Conta Google:**
+   * Nome de exibição e endereço de e-mail (utilizados estritamente para identificar localmente o host da sessão e exibir o status de conexão dentro do aplicativo).
+2. **Dados de Arquivos de Jogo (Savegames):**
+   * Arquivos locais de progresso dos jogos selecionados pelo usuário (ex: saves do HumanitZ, Valheim, etc.) e metadados de versão (data de modificação, tamanho e checksum SHA256).
+
+O FYXXSYNc **não** coleta senhas, histórico de navegação, dados financeiros ou quaisquer outras informações pessoais desnecessárias para a sincronização de jogos.
+
+---
+
+### 2. Uso dos Dados e Permissões do Google Drive
+
+O aplicativo solicita permissão de acesso à API do Google Drive exclusivamente para as seguintes finalidades:
+* Criar e gerenciar a pasta `FYXXSYNC` no seu próprio Google Drive.
+* Realizar o upload e download dos pacotes compactados de saves (`save_data.zip`) e seus respectivos arquivos de versão (`manifest.json`).
+* Gerenciar cópias de segurança (backups) das versões anteriores na nuvem.
+
+#### Declaração de Uso Limitado (Google API Limited Use Disclosure):
+O uso e a transferência de informações recebidas das APIs do Google para qualquer outro aplicativo pelo FYXXSYNc cumprirão rigorosamente a **Política de Dados do Usuário dos Serviços de API do Google** (Google API Services User Data Policy), incluindo os requisitos de **Uso Limitado**.
+
+---
+
+### 3. Compartilhamento e Transferência de Dados
+
+* **Não comercialização:** Nós **nunca** vendemos, alugamos ou comercializamos seus dados pessoais ou arquivos de jogos com terceiros.
+* **Compartilhamento restrito a amigos:** Os arquivos de save enviados para o seu Google Drive só poderão ser acessados por outras pessoas caso você decida explicitamente compartilhar a respectiva pasta do Google Drive com seus amigos de jogo.
+* **Sem servidores intermediários:** A comunicação ocorre diretamente entre o seu computador e os servidores do Google através de conexões encriptadas (HTTPS/TLS).
+
+---
+
+### 4. Armazenamento Local e Segurança
+
+* Os tokens de autenticação gerados pelo Google OAuth são armazenados localmente no seu computador (no arquivo `token.json` dentro da pasta do aplicativo).
+* Cópias de segurança locais dos saves são mantidas na pasta `local_backups` no seu próprio dispositivo para prevenção contra perdas acidentais de progresso.
+
+---
+
+### 5. Retenção e Exclusão de Dados
+
+* Você pode revogar o acesso do FYXXSYNc à sua Conta Google a qualquer momento através do painel de segurança do Google em:  
+  https://myaccount.google.com/permissions
+* Ao desconectar o aplicativo ou desinstalá-lo, o arquivo de credenciais local (`token.json`) é excluído.
+* Você tem controle total sobre os arquivos armazenados no seu Google Drive, podendo excluí-los a qualquer momento diretamente pela interface do Google Drive.
+
+---
+
+### 6. Contato
+
+Se você tiver dúvidas, sugestões ou solicitações relacionadas a esta Política de Privacidade, entre em contato com o desenvolvedor responsável através do e-mail:  
+📧 **gerrva@gmail.com**
