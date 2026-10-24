@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FYXXSYNc - Cloud Save Sync para Jogos Co-op</title>
+    <meta name="description" content="Sincronizador automático de saves na nuvem para jogos cooperativos peer-to-peer como HumanitZ, Valheim e Sons of the Forest.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131b2e;
+            --card-border: #1f293d;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #0284c7;
+            --accent-purple: #8b5cf6;
+            --accent-green: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .btn-github {
+            background: #1e293b;
+            color: #fff !important;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            transition: all 0.2s;
+        }
+
+        .btn-github:hover {
+            background: #334155;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 40%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 680px;
+            margin: 0 auto 36px;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0284c7, #00f2fe);
+            color: #0b0f19;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #1a243d;
+            border-color: #334155;
+        }
+
+        /* Grid de Recursos */
+        .features {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 28px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 242, 254, 0.4);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Como Funciona */
+        .how-it-works {
+            padding: 60px 0;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .step-item {
+            background: #0e1526;
+            border: 1px solid var(--card-border);
+            padding: 24px;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .step-num {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            background: rgba(0, 242, 254, 0.1);
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+
+        .step-item h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .step-item p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 40px 0;
+            margin-top: 60px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 34px; }
+            .hero p { font-size: 16px; }
+            .footer-content { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Navegação -->
+        <nav>
+            <a href="#" class="logo">⚡ FYXXSYNc</a>
+            <div class="nav-links">
+                <a href="#recursos">Recursos</a>
+                <a href="#como-funciona">Como Funciona</a>
+                <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Privacy%20Policy" target="_blank">Privacidade</a>
+                <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Terms%20of%20Service" target="_blank">Termos</a>
+                <a href="https://github.com/ogerrva/FYXXSYNc" target="_blank" class="btn-github">GitHub</a>
+            </div>
+        </nav>
+
+        <!-- Hero -->
+        <section class="hero">
+            <span class="badge">🔥 Versão Beta 1.0 Portable</span>
+            <h1>Sincronize Saves Co-op com seus Amigos na Nuvem</h1>
+            <p>O servidor fechou quando seu amigo saiu do jogo? O <strong>FYXXSYNc</strong> sobe o save automaticamente para o Google Drive ao fechar a partida, permitindo que qualquer amigo continue o mundo como o novo host!</p>
+            <div class="hero-actions">
+                <a href="https://github.com/ogerrva/FYXXSYNc/releases" target="_blank" class="btn-primary">⬇️ Baixar FYXXSYNc.exe</a>
+                <a href="https://github.com/ogerrva/FYXXSYNc" target="_blank" class="btn-secondary">⭐ Ver no GitHub</a>
+            </div>
+        </section>
+
+        <!-- Recursos -->
+        <section id="recursos" class="features">
+            <div class="section-title">
+                <h2>Por que usar o FYXXSYNc?</h2>
+                <p>Criado para resolver o problema clássico de mundos presos no PC do host.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="card">
+                    <span class="card-icon">☁️</span>
+                    <h3>Google Drive Nativo</h3>
+                    <p>Utiliza sua própria conta Google. Seus dados ficam seguros no seu Drive, sem necessidade de servidores pagos de terceiros.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-icon">🔄</span>
+                    <h3>Sincronização Automática</h3>
+                    <p>O monitor detecta quando o jogo fecha e faz o upload em 3 segundos. Os amigos com o app aberto baixam a atualização silenciosamente.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-icon">🎮</span>
+                    <h3>Suporte Multi-Game</h3>
+                    <p>Compatível nativamente com <strong>HumanitZ</strong>, <strong>Valheim</strong>, <strong>Sons of the Forest</strong>, <strong>Project Zomboid</strong> e suporte para adicionar qualquer outro jogo.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-icon">🛡️</span>
+                    <h3>Backups Anti-Corrupção</h3>
+                    <p>Cria cópias locais com data e hora antes de qualquer substituição de arquivo. Seu progresso solo nunca é apagado ou misturado.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-icon">⚡</span>
+                    <h3>Ultra Compactado</h3>
+                    <p>Os saves de jogos como HumanitZ são compactados em até 98%, reduzindo saves de 30 MB para menos de 0.5 MB em menos de um segundo.</p>
+                </div>
+
+                <div class="card">
+                    <span class="card-icon">👥</span>
+                    <h3>Quem é o Host?</h3>
+                    <p>Como todos os jogadores têm a versão mais recente em mãos, qualquer membro do grupo pode iniciar a sessão no Discord sem depender de ninguém.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Como Funciona -->
+        <section id="como-funciona" class="how-it-works">
+            <div class="section-title">
+                <h2>Como Funciona na Prática</h2>
+                <p>Configuração simples em menos de 2 minutos.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-item">
+                    <span class="step-num">PASSO 1</span>
+                    <h4>Conecte seu Google</h4>
+                    <p>Abra o <code>FYXXSYNC.exe</code> e autorize com sua conta Google pelo navegador.</p>
+                </div>
+
+                <div class="step-item">
+                    <span class="step-num">PASSO 2</span>
+                    <h4>Escolha o Jogo e Save</h4>
+                    <p>Selecione o jogo (ex: HumanitZ) e escolha qual mundo deseja compartilhar com seus amigos.</p>
+                </div>
+
+                <div class="step-item">
+                    <span class="step-num">PASSO 3</span>
+                    <h4>Jogue Normalmente</h4>
+                    <p>Ao fechar o jogo, o progresso sobe automaticamente para o Drive da turma.</p>
+                </div>
+
+                <div class="step-item">
+                    <span class="step-num">PASSO 4</span>
+                    <h4>Próximo Host Assume</h4>
+                    <p>O próximo amigo que abrir o jogo já terá o save atualizado pronto na máquina dele!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rodapé -->
+        <footer>
+            <div class="footer-content">
+                <div>
+                    <strong>⚡ FYXXSYNc</strong> &copy; 2026. Desenvolvido para a comunidade gamer.
+                </div>
+                <div class="footer-links">
+                    <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Privacy%20Policy" target="_blank">Política de Privacidade</a>
+                    <a href="https://raw.githubusercontent.com/ogerrva/FYXXSYNc/refs/heads/main/Terms%20of%20Service" target="_blank">Termos de Serviço</a>
+                    <a href="mailto:gerrva@gmail.com">Contato</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
